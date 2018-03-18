@@ -1,0 +1,38 @@
+group 'com.auth0.samples'
+version '1.0-SNAPSHOT'
+apply plugin: 'java'
+
+apply plugin: 'application'
+apply plugin: 'com.github.johnrengelman.shadow'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+mainClassName = 'com.auth0.samples.Main'
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.github.jengelman.gradle.plugins:shadow:2.0.1'
+    }
+}
+
+shadowJar {
+    mergeServiceFiles()
+}
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+ compile('org.apache.tomcat.embed:tomcat-embed-jasper:8.0.47')
+  compile('com.auth0:auth0-spring-security-api:1.0.0-rc.3') {
+        exclude module: 'spring-security-config'
+        exclude module: 'spring-security-core'
+        exclude module: 'spring-security-web'
+    }
+ compile('org.springframework:spring-webmvc:5.0.1.RELEASE')
+  compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.2'
+}
